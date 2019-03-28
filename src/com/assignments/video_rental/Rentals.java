@@ -14,27 +14,31 @@ class Rentals {
         rentalList.add(rental);
     }
 
-    private boolean hasMovieOfType(Rental rental, int priceCode){
+    private boolean hasMovieOfType(Rental rental, int priceCode) {
         return rental.isMovieOfType(priceCode);
     }
 
     private double calculateRentalPrice(Rental rental) {
         double rentalPrice = 0;
+        int thresholdUnplayableDays = 0;
+        double rentPerDay = 1.5;
 
         if (hasMovieOfType(rental, Movie.REGULAR)) {
-            rentalPrice += 2;
-            if (rental.getDaysRented() > 2)
-                rentalPrice += (rental.getDaysRented() - 2) * 1.5;
-        }
-
-        if (hasMovieOfType(rental, Movie.NEW_RELEASE)) {
-            rentalPrice += rental.getDaysRented() * 3;
+            rentalPrice = 2;
+            thresholdUnplayableDays = 2;
         }
 
         if (hasMovieOfType(rental, Movie.CHILDREN)) {
-            rentalPrice += 1.5;
-            if (rental.getDaysRented() > 3)
-                rentalPrice += (rental.getDaysRented() - 3) * 1.5;
+            rentalPrice = 1.5;
+            thresholdUnplayableDays = 3;
+        }
+
+        if(hasMovieOfType(rental, Movie.NEW_RELEASE)){
+            rentPerDay = 3;
+        }
+
+        if (rental.isRentedForMoreThan(thresholdUnplayableDays)) {
+            rentalPrice += rental.excessiveRentedDays(thresholdUnplayableDays) * rentPerDay;
         }
 
         return rentalPrice;
@@ -58,7 +62,7 @@ class Rentals {
         int latestReleasesCount = 0;
 
         for (Rental rental : rentalList) {
-            if (isNewRelease(rental) && rental.getDaysRented() > 1)
+            if (isNewRelease(rental) && rental.isRentedForMoreThan(1))
                 latestReleasesCount++;
         }
         return latestReleasesCount;
@@ -68,7 +72,7 @@ class Rentals {
         StringBuilder description = new StringBuilder();
         for (Rental rental : rentalList) {
             description.append("\t")
-                    .append(rental.getDescription())
+                    .append(rental.getMovieTitle())
                     .append("\t")
                     .append(calculateRentalPrice(rental))
                     .append("\n");
