@@ -1,70 +1,45 @@
 package com.assignments.video_rental;
 
-import java.util.ArrayList;
-
 class Customer {
 
 	private String name;
-	private ArrayList<Rental> rentalList = new ArrayList<Rental>();
+	private Rentals rentals;
 
 	Customer(String name) {
 		this.name = name;
+		this.rentals = new Rentals();
 	}
 
-	void addRental(Rental arg) {
-		rentalList.add(arg);
+	void addRental(Rental rental) {
+		rentals.add(rental);
 	}
 
 	private String getName() {
 		return name;
 	}
 
-	private double calculateRentalPrice(Rental rental) {
-		double thisAmount = 0;
-
-		// determine amounts for rental line
-		switch (rental.getMovie().getPriceCode()) {
-			case Movie.REGULAR:
-				thisAmount += 2;
-				if (rental.getDaysRented() > 2)
-					thisAmount += (rental.getDaysRented() - 2) * 1.5;
-				break;
-			case Movie.NEW_RELEASE:
-				thisAmount += rental.getDaysRented() * 3;
-				break;
-			case Movie.CHILDREN:
-				thisAmount += 1.5;
-				if (rental.getDaysRented() > 3)
-					thisAmount += (rental.getDaysRented() - 3) * 1.5;
-				break;
-
-		}
-		return thisAmount;
-	}
+	private int calculateFrequentRenterPoints() {
+        int frequentRenterPoints = 0;
+        int bonusPonits = rentals.getLatestReleases();
+        int renterPoints = rentals.getTotalRentals();
+        frequentRenterPoints = bonusPonits + renterPoints;
+        return frequentRenterPoints;
+    }
 
 	String statement() {
-		double totalAmount = 0;
-		int frequentRenterPoints = 0;
-
         StringBuilder result = new StringBuilder();
+
         result.append("Rental Record for " + getName() + "\n");
 
-		for (Rental rental : rentalList) {
-			double rentalPrice = calculateRentalPrice(rental);
+        int frequentRenterPoints = calculateFrequentRenterPoints();
 
-			// add frequent renter points
-			frequentRenterPoints++;
-			// add bonus for a two day new release rental
-			if ((rental.getMovie().getPriceCode() == Movie.NEW_RELEASE)
-					&& rental.getDaysRented() > 1)
-				frequentRenterPoints++;
+       double totalAmount = rentals.calculateTotalRentalPrice();
 
-			// show figures for this rental
-			result.append("\t" + rental.getMovie().getTitle() + "\t" + String.valueOf(rentalPrice) + "\n");
-			totalAmount += rentalPrice;
+        String rentalsDescription = rentals.getDescription();
 
-		}
 		// add footer lines
+        result.append(rentalsDescription);
+
 		result.append("Amount owed is " + String.valueOf(totalAmount) + "\n");
 		result.append("You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points");
 		return result.toString();
