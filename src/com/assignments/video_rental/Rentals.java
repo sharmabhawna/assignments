@@ -15,26 +15,29 @@ class Rentals {
     }
 
     private double calculateRentalPrice(Rental rental) {
-        double thisAmount = 0;
+        double rentalPrice = 0;
 
-        // determine amounts for rental line
         switch (rental.getMovie().getPriceCode()) {
             case Movie.REGULAR:
-                thisAmount += 2;
+                rentalPrice += 2;
                 if (rental.getDaysRented() > 2)
-                    thisAmount += (rental.getDaysRented() - 2) * 1.5;
+                    rentalPrice += (rental.getDaysRented() - 2) * 1.5;
                 break;
             case Movie.NEW_RELEASE:
-                thisAmount += rental.getDaysRented() * 3;
+                rentalPrice += rental.getDaysRented() * 3;
                 break;
             case Movie.CHILDREN:
-                thisAmount += 1.5;
+                rentalPrice += 1.5;
                 if (rental.getDaysRented() > 3)
-                    thisAmount += (rental.getDaysRented() - 3) * 1.5;
+                    rentalPrice += (rental.getDaysRented() - 3) * 1.5;
                 break;
 
         }
-        return thisAmount;
+        return rentalPrice;
+    }
+
+    private boolean isNewRelease(Rental rental){
+        return rental.getMovie().getPriceCode() == Movie.NEW_RELEASE;
     }
 
     double calculateTotalRentalPrice() {
@@ -51,22 +54,25 @@ class Rentals {
         int latestReleasesCount = 0;
 
         for (Rental rental : rentalList) {
-            if ((rental.getMovie().getPriceCode() == Movie.NEW_RELEASE)
-                    && rental.getDaysRented() > 1)
-            latestReleasesCount++;
+            if (isNewRelease(rental) && rental.getDaysRented() > 1)
+                latestReleasesCount++;
         }
         return latestReleasesCount;
     }
 
-    String getDescription(){
+    String getDescription() {
         StringBuilder description = new StringBuilder();
         for (Rental rental : rentalList) {
-            description.append("\t" + rental.getMovie().getTitle() + "\t" + String.valueOf(calculateRentalPrice(rental)) + "\n");
+            description.append("\t")
+                    .append(rental.getMovie().getTitle())
+                    .append("\t")
+                    .append(calculateRentalPrice(rental))
+                    .append("\n");
         }
         return description.toString();
     }
 
-    public int getTotalRentals() {
+    int getTotalRentals() {
         return rentalList.size();
     }
 }
