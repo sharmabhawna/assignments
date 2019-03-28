@@ -1,11 +1,11 @@
 package com.assignments.video_rental;
 
+import junit.framework.TestCase;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
-
-import junit.framework.TestCase;
 
 public class CustomerTest extends TestCase {
 
@@ -17,7 +17,7 @@ public class CustomerTest extends TestCase {
 	private Movie ran = new Movie("Ran", Movie.REGULAR);
 	private Movie la = new Movie("LA Confidential", Movie.NEW_RELEASE);
 	private Movie trek = new Movie("Star Trek 13.2", Movie.NEW_RELEASE);
-	private Movie wallace = new Movie("Wallace and Gromit", Movie.CHILDRENS);
+	private Movie wallace = new Movie("Wallace and Gromit", Movie.CHILDREN);
 
     public void setUp (){
        dinsdale.addRental(new Rental (python, 3));
