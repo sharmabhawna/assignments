@@ -18,12 +18,11 @@ class Customer {
 		return name;
 	}
 
-	private int calculateFrequentRenterPoints() {
-        int frequentRenterPoints = 0;
-        int bonusPonits = rentals.getLatestReleases();
-        int renterPoints = rentals.getTotalRentals();
-        frequentRenterPoints = bonusPonits + renterPoints;
-        return frequentRenterPoints;
+	private int calculateRentalFrequency() {
+        int rentalFrequency = rentals.getTotalRentals();
+        int bonusPoints = rentals.getLatestReleaseRentals();
+        rentalFrequency = rentalFrequency + bonusPoints;
+        return rentalFrequency;
     }
 
 	String statement() {
@@ -31,7 +30,7 @@ class Customer {
 
         result.append("Rental Record for " + getName() + "\n");
 
-        int frequentRenterPoints = calculateFrequentRenterPoints();
+        int frequentRenterPoints = calculateRentalFrequency();
 
        double totalAmount = rentals.calculateTotalRentalPrice();
 
@@ -40,8 +39,8 @@ class Customer {
 		// add footer lines
         result.append(rentalsDescription);
 
-		result.append("Amount owed is " + String.valueOf(totalAmount) + "\n");
-		result.append("You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points");
+		result.append("Amount owed is " + totalAmount + "\n");
+		result.append("You earned " + frequentRenterPoints + " frequent renter points");
 		return result.toString();
 	}
 
