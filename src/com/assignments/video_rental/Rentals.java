@@ -14,30 +14,34 @@ class Rentals {
         rentalList.add(rental);
     }
 
+    private boolean hasMovieOfType(Rental rental, int priceCode){
+        return rental.isMovieOfType(priceCode);
+    }
+
     private double calculateRentalPrice(Rental rental) {
         double rentalPrice = 0;
 
-        switch (rental.getMovie().getPriceCode()) {
-            case Movie.REGULAR:
-                rentalPrice += 2;
-                if (rental.getDaysRented() > 2)
-                    rentalPrice += (rental.getDaysRented() - 2) * 1.5;
-                break;
-            case Movie.NEW_RELEASE:
-                rentalPrice += rental.getDaysRented() * 3;
-                break;
-            case Movie.CHILDREN:
-                rentalPrice += 1.5;
-                if (rental.getDaysRented() > 3)
-                    rentalPrice += (rental.getDaysRented() - 3) * 1.5;
-                break;
-
+        if (hasMovieOfType(rental, Movie.REGULAR)) {
+            rentalPrice += 2;
+            if (rental.getDaysRented() > 2)
+                rentalPrice += (rental.getDaysRented() - 2) * 1.5;
         }
+
+        if (hasMovieOfType(rental, Movie.NEW_RELEASE)) {
+            rentalPrice += rental.getDaysRented() * 3;
+        }
+
+        if (hasMovieOfType(rental, Movie.CHILDREN)) {
+            rentalPrice += 1.5;
+            if (rental.getDaysRented() > 3)
+                rentalPrice += (rental.getDaysRented() - 3) * 1.5;
+        }
+
         return rentalPrice;
     }
 
-    private boolean isNewRelease(Rental rental){
-        return rental.getMovie().getPriceCode() == Movie.NEW_RELEASE;
+    private boolean isNewRelease(Rental rental) {
+        return rental.isMovieOfType(Movie.NEW_RELEASE);
     }
 
     double calculateTotalRentalPrice() {
@@ -50,7 +54,7 @@ class Rentals {
         return totalPrice;
     }
 
-    int getLatestReleases() {
+    int getLatestReleaseRentals() {
         int latestReleasesCount = 0;
 
         for (Rental rental : rentalList) {
@@ -64,7 +68,7 @@ class Rentals {
         StringBuilder description = new StringBuilder();
         for (Rental rental : rentalList) {
             description.append("\t")
-                    .append(rental.getMovie().getTitle())
+                    .append(rental.getDescription())
                     .append("\t")
                     .append(calculateRentalPrice(rental))
                     .append("\n");

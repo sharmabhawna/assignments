@@ -15,7 +15,11 @@ class Rental {
         return daysRented;
     }
 
-    Movie getMovie() {
-        return movie;
+    String getDescription(){
+        return this.movie.getTitle();
+    }
+
+    boolean isMovieOfType(int priceCode){
+        return this.movie.isSameMovie(priceCode);
     }
 }

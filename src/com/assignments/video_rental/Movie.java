@@ -13,16 +13,16 @@ class Movie {
 		this.priceCode = priceCode;
 	}
 
-	int getPriceCode() {
-		return priceCode;
-	}
-
 	void setPriceCode(int price) {
     	priceCode = price;
 	}
 
 	String getTitle() {
 		return title;
+	}
+
+	boolean isSameMovie(int priceCode) {
+		return this.priceCode == priceCode;
 	}
 }
 
