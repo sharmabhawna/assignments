@@ -44,10 +44,6 @@ class Rentals {
         return rentalPrice;
     }
 
-    private boolean isNewRelease(Rental rental) {
-        return rental.isMovieOfType(Movie.NEW_RELEASE);
-    }
-
     double calculateTotalRentalPrice() {
         double totalPrice = 0;
 
@@ -62,7 +58,7 @@ class Rentals {
         int latestReleasesCount = 0;
 
         for (Rental rental : rentalList) {
-            if (isNewRelease(rental) && rental.isRentedForMoreThan(1))
+            if (hasMovieOfType(rental, Movie.NEW_RELEASE) && rental.isRentedForMoreThan(1))
                 latestReleasesCount++;
         }
         return latestReleasesCount;
