@@ -14,44 +14,22 @@ class Rentals {
         rentalList.add(rental);
     }
 
-    private boolean hasMovieOfType(Rental rental, int priceCode) {
-        return rental.isMovieOfType(priceCode);
-    }
-
-    private double calculateRentalPrice(Rental rental) {
-        double rentalPrice = 0;
-        int thresholdUnplayableDays = 0;
-        double rentPerDay = 1.5;
-
-        if (hasMovieOfType(rental, Movie.REGULAR)) {
-            rentalPrice = 2;
-            thresholdUnplayableDays = 2;
-        }
-
-        if (hasMovieOfType(rental, Movie.CHILDREN)) {
-            rentalPrice = 1.5;
-            thresholdUnplayableDays = 3;
-        }
-
-        if(hasMovieOfType(rental, Movie.NEW_RELEASE)){
-            rentPerDay = 3;
-        }
-
-        if (rental.isRentedForMoreThan(thresholdUnplayableDays)) {
-            rentalPrice += rental.excessiveRentedDays(thresholdUnplayableDays) * rentPerDay;
-        }
-
-        return rentalPrice;
-    }
-
-    double calculateTotalRentalPrice() {
+    double calculateTotalRent() {
         double totalPrice = 0;
 
         for (Rental rental : rentalList) {
-            double rentalPrice = calculateRentalPrice(rental);
+            double rentalPrice = rental.calculateRent();
             totalPrice += rentalPrice;
         }
         return totalPrice;
+    }
+
+    int calculateTotalPoints() {
+        int renterPoints = 0;
+        for (Rental rental : rentalList) {
+            renterPoints += rental.calculatePoint();
+        }
+        return renterPoints;
     }
 
     String getDescription() {
@@ -60,17 +38,9 @@ class Rentals {
             description.append("\t")
                     .append(rental.getMovieTitle())
                     .append("\t")
-                    .append(calculateRentalPrice(rental))
+                    .append(rental.calculateRent())
                     .append("\n");
         }
         return description.toString();
-    }
-
-    int calculateTotalRenterPoints() {
-        int renterPoints = 0;
-        for (Rental rental : rentalList) {
-            renterPoints += rental.calculateRenterPoint();
-        }
-        return renterPoints;
     }
 }

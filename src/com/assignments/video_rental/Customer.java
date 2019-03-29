@@ -14,18 +14,14 @@ class Customer {
         rentals.add(rental);
     }
 
-    private String getName() {
-        return name;
-    }
-
     String statement() {
         StringBuilder result = new StringBuilder();
 
-        result.append("Rental Record for " + getName() + "\n");
+        result.append("Rental Record for " + this.name + "\n");
 
-        int frequentRenterPoints = rentals.calculateTotalRenterPoints();
+        int frequentRenterPoints = rentals.calculateTotalPoints();
 
-        double totalAmount = rentals.calculateTotalRentalPrice();
+        double totalAmount = rentals.calculateTotalRent();
 
         String rentalsDescription = rentals.getDescription();
 
