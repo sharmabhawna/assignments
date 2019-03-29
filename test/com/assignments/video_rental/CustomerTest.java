@@ -31,6 +31,7 @@ public class CustomerTest extends TestCase {
     	dinsdale = new Customer("Dinsdale Pirhana");
         equalsFile("1st Output", "outputEmpty", dinsdale.statement());
     }
+
     public void testCustomer() throws Exception {
         equalsFile("1st Output", "output1", dinsdale.statement());
     }
@@ -40,12 +41,10 @@ public class CustomerTest extends TestCase {
         equalsFile("1st Output", "outputChange", dinsdale.statement());
     }
 
-    /*
-    public void testHtml() throws Exception {
-        equalsFile("1st Output", "outputHtml", dinsdale.htmlStatement());
-    }
-    */
-    	
+//    public void testHtml() throws Exception {
+//        equalsFile("1st Output", "outputHtml", dinsdale.htmlStatement());
+//    }
+
     private void equalsFile(String message, String fileName, String actualValue) throws IOException{
         BufferedReader file = new BufferedReader (new FileReader (GOLD_PATH + '/' + fileName));
         BufferedReader actualStream = new BufferedReader (new StringReader (actualValue));

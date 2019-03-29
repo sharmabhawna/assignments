@@ -32,5 +32,4 @@ class Customer {
         result.append("You earned " + frequentRenterPoints + " frequent renter points");
         return result.toString();
     }
-
 }

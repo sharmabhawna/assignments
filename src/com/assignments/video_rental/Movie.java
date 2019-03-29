@@ -22,12 +22,14 @@ class Movie {
 	}
 
 	int rentalPoints(int daysRented) {
-		PriceCode priceCode = new PriceCode(this.priceCode);
+		PriceCodeFactory priceCodeFactory = new PriceCodeFactory(priceCode);
+		PriceCode priceCode = priceCodeFactory.getPriceCode();
 		return priceCode.calculateRenterPoint(daysRented);
 	}
 
 	double rentToPay(int daysRented) {
-		PriceCode priceCode = new PriceCode(this.priceCode);
+		PriceCodeFactory priceCodeFactory = new PriceCodeFactory(priceCode);
+		PriceCode priceCode = priceCodeFactory.getPriceCode();
 		return priceCode.calculateRent(daysRented);
 	}
 }
