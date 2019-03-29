@@ -54,16 +54,6 @@ class Rentals {
         return totalPrice;
     }
 
-    int getLatestReleaseRentals() {
-        int latestReleasesCount = 0;
-
-        for (Rental rental : rentalList) {
-            if (hasMovieOfType(rental, Movie.NEW_RELEASE) && rental.isRentedForMoreThan(1))
-                latestReleasesCount++;
-        }
-        return latestReleasesCount;
-    }
-
     String getDescription() {
         StringBuilder description = new StringBuilder();
         for (Rental rental : rentalList) {
@@ -76,7 +66,11 @@ class Rentals {
         return description.toString();
     }
 
-    int getTotalRentals() {
-        return rentalList.size();
+    int calculateTotalRenterPoints() {
+        int renterPoints = 0;
+        for (Rental rental : rentalList) {
+            renterPoints += rental.calculateRenterPoint();
+        }
+        return renterPoints;
     }
 }

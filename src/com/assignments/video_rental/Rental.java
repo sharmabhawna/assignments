@@ -26,4 +26,8 @@ class Rental {
     int excessiveRentedDays(int thresholdUnplayableDays) {
         return this.daysRented - thresholdUnplayableDays;
     }
+
+    int calculateRenterPoint() {
+        return this.movie.renterPoints(daysRented);
+    }
 }

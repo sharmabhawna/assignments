@@ -24,5 +24,12 @@ class Movie {
 	boolean isSameMovie(int priceCode) {
 		return this.priceCode == priceCode;
 	}
+
+	int renterPoints(int daysRented) {
+		if(this.priceCode == Movie.NEW_RELEASE && daysRented > 1){
+			return 2;
+		}
+		return 1;
+	}
 }
 
