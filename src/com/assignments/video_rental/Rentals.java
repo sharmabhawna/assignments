@@ -24,23 +24,23 @@ class Rentals {
         return totalPrice;
     }
 
-    int calculateTotalPoints() {
+    int calculateRentalFrequency() {
         int renterPoints = 0;
         for (Rental rental : rentalList) {
-            renterPoints += rental.calculatePoint();
+            renterPoints += rental.calculateRentalPoint();
         }
         return renterPoints;
     }
 
-    String getDescription() {
+    String getStatement() {
         StringBuilder description = new StringBuilder();
+
         for (Rental rental : rentalList) {
             description.append("\t")
-                    .append(rental.getMovieTitle())
-                    .append("\t")
-                    .append(rental.calculateRent())
+                    .append(rental.getStatement())
                     .append("\n");
         }
+
         return description.toString();
     }
 }

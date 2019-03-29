@@ -19,16 +19,16 @@ class Customer {
 
         result.append("Rental Record for " + this.name + "\n");
 
-        int frequentRenterPoints = rentals.calculateTotalPoints();
+        int frequentRenterPoints = rentals.calculateRentalFrequency();
 
-        double totalAmount = rentals.calculateTotalRent();
+        double totalRentalPrice = rentals.calculateTotalRent();
 
-        String rentalsDescription = rentals.getDescription();
+        String rentalsDescription = rentals.getStatement();
 
         // add footer lines
         result.append(rentalsDescription);
 
-        result.append("Amount owed is " + totalAmount + "\n");
+        result.append("Amount owed is " + totalRentalPrice + "\n");
         result.append("You earned " + frequentRenterPoints + " frequent renter points");
         return result.toString();
     }
